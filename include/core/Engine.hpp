@@ -5,6 +5,10 @@
 
 namespace wolfen {
 	class Engine {
+		private:
+			Display m_display;
+			bool m_running { false };
+
 		public:
 			Engine();
 			~Engine() = default;
@@ -12,11 +16,7 @@ namespace wolfen {
 			void run();
 
 		private:
-			Display m_display;
-			bool m_running { false };
-
-		private:
-			void process_events();
+			void processEvents();
 			void update();
 			void draw();
 	};

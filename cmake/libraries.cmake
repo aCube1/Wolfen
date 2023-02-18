@@ -7,6 +7,18 @@ function(link_default_libraries target)
 
 	target_link_libraries(
 		${target}
-		SDL2::SDL2
+		PRIVATE
+			SDL2::SDL2
+	)
+
+	target_sources(
+		${target}
+		PRIVATE
+			${LIBS_DIR}/loguru/loguru.cpp
+	)
+	target_include_directories(
+		${target}
+		PRIVATE
+			${LIBS_DIR}/loguru
 	)
 endfunction()

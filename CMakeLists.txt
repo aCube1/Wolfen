@@ -7,9 +7,11 @@ include(cmake/libraries.cmake)
 
 add_executable(${PROJECT_NAME})
 
+set(CMAKE_CXX_STANDARD 17)
+
 target_compile_features(
 	${PROJECT_NAME}
-	PUBLIC
+	PRIVATE
 		cxx_std_17
 )
 

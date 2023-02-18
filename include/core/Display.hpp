@@ -10,6 +10,10 @@ namespace wolfen {
 		public:
 			static constexpr SDL_Color clear_color { 0, 0, 0, SDL_ALPHA_OPAQUE };
 
+		private:
+			SDL_Window *m_window { nullptr };
+			SDL_Renderer *m_renderer { nullptr };
+
 		public:
 			Display() = default;
 			~Display();
@@ -27,13 +31,9 @@ namespace wolfen {
 				SDL_RenderPresent(m_renderer);
 			}
 
-			inline SDL_Renderer *getRenderer() const {
+			[[nodiscard]] inline SDL_Renderer *getRenderer() const {
 				return m_renderer;
 			}
-
-		private:
-			SDL_Window *m_window { nullptr };
-			SDL_Renderer *m_renderer { nullptr };
 	};
 } // namespace wolfen
 
