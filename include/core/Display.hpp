@@ -1,35 +1,32 @@
 #ifndef _WOLFEN_CORE_DISPLAY_HPP_
 #define _WOLFEN_CORE_DISPLAY_HPP_
 
+#include "utils/types.hpp"
+
 #include <SDL_pixels.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
 
 namespace wolfen {
 	class Display {
-		public:
-			static constexpr SDL_Color clear_color { 0, 0, 0, SDL_ALPHA_OPAQUE };
-
 		private:
 			SDL_Window *m_window { nullptr };
 			SDL_Renderer *m_renderer { nullptr };
+
+			static constexpr SDL_Color clear_color { 0, 0, 0, SDL_ALPHA_OPAQUE };
 
 		public:
 			Display() = default;
 			~Display();
 
 			void load(int width, int height);
+			void beginDrawing();
+			void endDrawing();
 
-			inline void beginDrawing() {
-				SDL_SetRenderDrawColor(
-					m_renderer, clear_color.r, clear_color.g, clear_color.b, clear_color.a
-				);
-				SDL_RenderClear(m_renderer);
-			}
+			Display& fillRect(const Vec2& pos, const Vec2& size);
 
-			inline void endDrawing() {
-				SDL_RenderPresent(m_renderer);
-			}
+			Display& setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = SDL_ALPHA_OPAQUE);
+			Display& setColor(SDL_Color color);
 
 			[[nodiscard]] inline SDL_Renderer *getRenderer() const {
 				return m_renderer;

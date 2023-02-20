@@ -1,7 +1,8 @@
 #include "core/Display.hpp"
 
-#include "utils.hpp"
+#include "utils/settings.hpp"
 
+#include <SDL_render.h>
 #include <cstdint>
 #include <loguru.hpp>
 #include <stdexcept>
@@ -43,5 +44,38 @@ namespace wolfen {
 		}
 
 		SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
+	}
+
+	void Display::beginDrawing() {
+		setColor(clear_color);
+		if (SDL_RenderClear(m_renderer) < 0) {
+			LOG_F(ERROR, "Unable to clear display!");
+			throw std::runtime_error(SDL_GetError());
+		}
+	}
+
+	void Display::endDrawing() {
+		SDL_RenderPresent(m_renderer);
+	}
+
+	Display& Display::fillRect(const Vec2& pos, const Vec2& size) {
+		SDL_FRect rect { pos.x, pos.y, size.x, size.y };
+		if (SDL_RenderFillRectF(m_renderer, &rect) < 0) {
+			LOG_F(ERROR, "Unable to set color!");
+			throw std::runtime_error(SDL_GetError());
+		}
+		return *this;
+	}
+
+	Display& Display::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+		if (SDL_SetRenderDrawColor(m_renderer, r, g, b, a) < 0) {
+			LOG_F(ERROR, "Unable to set color!");
+			throw std::runtime_error(SDL_GetError());
+		}
+		return *this;
+	}
+
+	Display& Display::setColor(SDL_Color color) {
+		return setColor(color.r, color.g, color.b, color.a);
 	}
 } // namespace wolfen
