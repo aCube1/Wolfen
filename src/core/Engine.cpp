@@ -9,7 +9,8 @@
 #include <stdexcept>
 
 namespace wolfen {
-	Engine::Engine() : m_player { settings::PLAYER_X, settings::PLAYER_Y } {
+	Engine::Engine()
+		: m_player { settings::PLAYER_X, settings::PLAYER_Y, settings::PLAYER_SPEED } {
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 			LOG_F(ERROR, "Unable to initialize SDL2!");
 			throw std::runtime_error(SDL_GetError());
@@ -35,14 +36,14 @@ namespace wolfen {
 	void Engine::processEvents() {
 		SDL_Event e {};
 
-		SDL_PumpEvents();
-		m_keyboard = SDL_GetKeyboardState(nullptr);
-
 		while (SDL_PollEvent(&e)) {
 			if (e.type == SDL_QUIT) {
 				m_running = false;
 			}
 		}
+
+		SDL_PumpEvents();
+		m_keyboard = SDL_GetKeyboardState(nullptr);
 
 		m_player.input(m_keyboard);
 	}

@@ -20,7 +20,7 @@ namespace wolfen {
 	}
 
 	void Player::update(double dt) {
-		m_velocity = m_motion * m_maxspeed * dt;
+		m_velocity = m_motion.normalize() * m_maxspeed * dt;
 		m_motion = Vec2 { 0.0, 0.0 };
 
 		m_position += m_velocity;

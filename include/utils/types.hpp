@@ -7,24 +7,14 @@
 namespace wolfen {
 	class Vec2 : public SDL_FPoint {
 		public:
-			[[nodiscard]] inline float getLenght() const {
-				return std::sqrt(x * x + y * y);
-			}
+			[[nodiscard]] float getLenght() const;
+			Vec2& normalize();
 
-			inline Vec2 operator+(Vec2 vec) {
-				return Vec2 { x + vec.x, y + vec.y };
-			}
+			Vec2 operator+(Vec2 vec);
+			Vec2 operator*(float value);
+			Vec2 operator/(float value);
 
-			inline Vec2 operator*(float value) {
-				return Vec2 { x * value, y * value };
-			}
-
-			inline Vec2& operator+=(Vec2 vec) {
-				x += vec.x;
-				y += vec.y;
-
-				return *this;
-			}
+			Vec2& operator+=(Vec2 vec);
 	};
 } // namespace wolfen
 

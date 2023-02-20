@@ -24,6 +24,8 @@ target_sources(
 		src/core/Display.cpp
 
 		src/entity/Player.cpp
+
+		src/utils/types.cpp
 )
 
 target_include_directories(
