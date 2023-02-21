@@ -10,6 +10,7 @@ namespace wolfen {
 
 			Vec2 m_motion {};
 			Vec2 m_velocity {};
+			float m_rotation {};
 
 		public:
 			Player(float x, float y, float speed)

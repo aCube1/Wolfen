@@ -67,6 +67,14 @@ namespace wolfen {
 		return *this;
 	}
 
+	Display& Display::drawLine(const Vec2& from, const Vec2& to) {
+		if (SDL_RenderDrawLineF(m_renderer, from.x, from.y, to.x, to.y) < 0) {
+			LOG_F(ERROR, "Unable to draw line!");
+			throw std::runtime_error(SDL_GetError());
+		}
+		return *this;
+	}
+
 	Display& Display::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 		if (SDL_SetRenderDrawColor(m_renderer, r, g, b, a) < 0) {
 			LOG_F(ERROR, "Unable to set color!");

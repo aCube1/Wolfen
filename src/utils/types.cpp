@@ -18,6 +18,10 @@ namespace wolfen {
 		return Vec2 { x + vec.x, y + vec.y };
 	}
 
+	Vec2 Vec2::operator-(Vec2 vec) {
+		return Vec2 { x - vec.x, y - vec.y };
+	}
+
 	Vec2 Vec2::operator*(float value) {
 		return Vec2 { x * value, y * value };
 	}

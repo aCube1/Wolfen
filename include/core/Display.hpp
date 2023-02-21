@@ -24,6 +24,7 @@ namespace wolfen {
 			void endDrawing();
 
 			Display& fillRect(const Vec2& pos, const Vec2& size);
+			Display& drawLine(const Vec2& from, const Vec2& to);
 
 			Display& setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = SDL_ALPHA_OPAQUE);
 			Display& setColor(SDL_Color color);

@@ -11,11 +11,15 @@ namespace wolfen {
 			Vec2& normalize();
 
 			Vec2 operator+(Vec2 vec);
+			Vec2 operator-(Vec2 value);
+
 			Vec2 operator*(float value);
 			Vec2 operator/(float value);
 
 			Vec2& operator+=(Vec2 vec);
 	};
+
+	class Rect : public SDL_FRect {};
 } // namespace wolfen
 
 #endif /* _WOLFEN_TYPES_HPP_ */
