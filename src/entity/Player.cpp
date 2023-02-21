@@ -3,25 +3,32 @@
 #include "utils/common.hpp"
 #include "utils/settings.hpp"
 
-#include <SDL_render.h>
 #include <cmath>
 
-static wolfen::Vec2 point { 0.0, 0.0 };
-
 namespace wolfen {
-	void Player::input(const Uint8 *keyboard) {
+	void Player::checkInput(const Uint8 *keyboard) {
 		// Apply movement rotation.
-		if (keyboard[SDL_SCANCODE_A]) {
+		if (keyboard[SDL_SCANCODE_Q]) {
 			m_rotation -= settings::PLAYER_ROTATION_SPEED;
 		}
-		if (keyboard[SDL_SCANCODE_D]) {
+		if (keyboard[SDL_SCANCODE_E]) {
 			m_rotation += settings::PLAYER_ROTATION_SPEED;
 		}
 
-		// Calculate movement direction.
+		// Calculate horizontal movement direction.
+		if (keyboard[SDL_SCANCODE_A]) {
+			m_motion.x -= std::cos(deg2rad(m_rotation - 90.0));
+			m_motion.y -= std::sin(deg2rad(m_rotation - 90.0));
+		}
+		if (keyboard[SDL_SCANCODE_D]) {
+			m_motion.x += std::cos(deg2rad(m_rotation - 90.0));
+			m_motion.y += std::sin(deg2rad(m_rotation - 90.0));
+		}
+
+		// Calculate vertical movement direction.
 		if (keyboard[SDL_SCANCODE_W]) {
-			m_motion.x += std::cos(deg2rad(m_rotation));
-			m_motion.y += std::sin(deg2rad(m_rotation));
+			m_motion.x -= std::cos(deg2rad(m_rotation));
+			m_motion.y -= std::sin(deg2rad(m_rotation));
 		}
 		if (keyboard[SDL_SCANCODE_S]) {
 			m_motion.x += std::cos(deg2rad(m_rotation));
@@ -29,21 +36,22 @@ namespace wolfen {
 		}
 	}
 
-	void Player::update(double dt) {
-		m_velocity = m_motion.normalize() * m_maxspeed * dt;
+	void Player::update(const Context& ctx) {
+		checkInput(ctx.keyboard);
+
+		m_velocity = m_motion.normalize() * m_maxspeed * ctx.dt;
 		m_motion = Vec2 { 0.0, 0.0 };
 
 		m_position += m_velocity;
-
-		// TEST: Test the player rotation.
-		point.x = m_position.x + std::cos(deg2rad(m_rotation)) * 64.0;
-		point.y = m_position.y + std::sin(deg2rad(m_rotation)) * 64.0;
 	}
 
-	void Player::draw(Display& display) {
+	void Player::draw(const Context& ctx) {
 		// Draw player rect.
-		display.setColor(0, 255, 0).fillRect(m_position - m_size / 2, m_size);
+		ctx.display.setColor(0, 255, 0).fillRect(m_position - m_size / 2, m_size);
 
-		display.setColor(255, 0, 0).drawLine(m_position, point);
+		// TEST: Draw player direction.
+		const wolfen::Vec2 point { m_position.x - std::cos(deg2rad(m_rotation)) * 48.0F,
+								   m_position.y - std::sin(deg2rad(m_rotation)) * 48.0F };
+		ctx.display.setColor(255, 0, 0).drawLine(m_position, point);
 	}
 } // namespace wolfen

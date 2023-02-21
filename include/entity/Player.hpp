@@ -2,6 +2,7 @@
 #define _WOLFEN_ENTITY_PLAYER_HPP_
 
 #include "entity/IEntity.hpp"
+#include "utils/settings.hpp"
 
 namespace wolfen {
 	class Player : public IEntity {
@@ -14,11 +15,14 @@ namespace wolfen {
 
 		public:
 			Player(float x, float y, float speed)
-				: IEntity { x, y, 32.0, 32.0 }, m_maxspeed { speed } {}
+				: IEntity { x, y, settings::PLAYER_WIDTH, settings::PLAYER_HEIGHT },
+				  m_maxspeed { speed } {}
 
-			void input(const Uint8 *keyboard) override;
-			void update(double dt) override;
-			void draw(Display& display) override;
+			void update(const Context& ctx) override;
+			void draw(const Context& ctx) override;
+
+		private:
+			void checkInput(const Uint8 *keyboard);
 	};
 } // namespace wolfen
 

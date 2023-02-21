@@ -1,7 +1,7 @@
 #ifndef _WOLFEN_ENTITY_IENTITY_HPP_
 #define _WOLFEN_ENTITY_IENTITY_HPP_
 
-#include "core/Display.hpp"
+#include "utils/common.hpp"
 #include "utils/types.hpp"
 
 #include <SDL_events.h>
@@ -21,9 +21,8 @@ namespace wolfen {
 
 			virtual ~IEntity() = default;
 
-			virtual void input(const Uint8 *keyboard) = 0;
-			virtual void update(double dt) = 0;
-			virtual void draw(Display& display) = 0;
+			virtual void update(const Context& ctx) = 0;
+			virtual void draw(const Context& ctx) = 0;
 	};
 } // namespace wolfen
 

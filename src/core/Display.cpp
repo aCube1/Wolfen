@@ -2,7 +2,6 @@
 
 #include "utils/settings.hpp"
 
-#include <SDL_render.h>
 #include <cstdint>
 #include <loguru.hpp>
 #include <stdexcept>

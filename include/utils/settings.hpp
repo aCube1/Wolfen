@@ -8,6 +8,9 @@ namespace wolfen::settings {
 
 	constexpr auto PLAYER_X { WINDOW_WIDTH / 2.0F };
 	constexpr auto PLAYER_Y { WINDOW_HEIGHT / 2.0F };
+	constexpr auto PLAYER_WIDTH { 32.0F };
+	constexpr auto PLAYER_HEIGHT { 32.0F };
+
 	constexpr auto PLAYER_SPEED { 300.0F };
 	constexpr auto PLAYER_ROTATION_SPEED { 5.0F };
 

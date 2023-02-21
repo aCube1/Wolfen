@@ -8,8 +8,7 @@ namespace wolfen {
 	class Engine {
 		private:
 			Display m_display;
-			const Uint8 *m_keyboard { nullptr };
-			double m_deltatime { 0.0 };
+			Context m_ctx { m_display, 0.0, nullptr };
 			bool m_running { false };
 
 			// TODO: Create a entity manager.

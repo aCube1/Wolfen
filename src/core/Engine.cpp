@@ -29,7 +29,7 @@ namespace wolfen {
 			update();
 			draw();
 
-			m_deltatime = (SDL_GetTicks64() - last_time) / 1000.0;
+			m_ctx.dt = (SDL_GetTicks64() - last_time) / 1000.0;
 		}
 	}
 
@@ -43,18 +43,16 @@ namespace wolfen {
 		}
 
 		SDL_PumpEvents();
-		m_keyboard = SDL_GetKeyboardState(nullptr);
-
-		m_player.input(m_keyboard);
+		m_ctx.keyboard = SDL_GetKeyboardState(nullptr);
 	}
 
 	void Engine::update() {
-		m_player.update(m_deltatime);
+		m_player.update(m_ctx);
 	}
 
 	void Engine::draw() {
 		m_display.beginDrawing();
-		{ m_player.draw(m_display); }
+		{ m_player.draw(m_ctx); }
 		m_display.endDrawing();
 	}
 } // namespace wolfen
