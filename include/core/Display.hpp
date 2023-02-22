@@ -13,16 +13,15 @@ namespace wolfen {
 			SDL_Window *m_window { nullptr };
 			SDL_Renderer *m_renderer { nullptr };
 
-			static constexpr SDL_Color clear_color { 0, 0, 0, SDL_ALPHA_OPAQUE };
-
 		public:
 			Display() = default;
 			~Display();
 
-			void load(int width, int height);
+			void load(Vec2 window_size);
 			void beginDrawing();
 			void endDrawing();
 
+			Display& fillRect(float x, float y, float w, float h);
 			Display& fillRect(const Vec2& pos, const Vec2& size);
 			Display& drawLine(const Vec2& from, const Vec2& to);
 

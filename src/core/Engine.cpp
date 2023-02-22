@@ -9,14 +9,15 @@
 #include <stdexcept>
 
 namespace wolfen {
-	Engine::Engine()
-		: m_player { settings::PLAYER_X, settings::PLAYER_Y, settings::PLAYER_SPEED } {
+	Engine::Engine() : m_player { settings::PLAYER_POS, settings::PLAYER_SPEED } {
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 			LOG_F(ERROR, "Unable to initialize SDL2!");
 			throw std::runtime_error(SDL_GetError());
 		}
 
-		m_display.load(settings::WINDOW_WIDTH, settings::WINDOW_HEIGHT);
+		m_display.load(settings::WINDOW_SIZE);
+
+		m_map.generate();
 
 		m_running = true;
 	}
@@ -52,7 +53,10 @@ namespace wolfen {
 
 	void Engine::draw() {
 		m_display.beginDrawing();
-		{ m_player.draw(m_ctx); }
+		{
+			m_player.draw(m_ctx);
+			m_map.draw(m_display);
+		}
 		m_display.endDrawing();
 	}
 } // namespace wolfen

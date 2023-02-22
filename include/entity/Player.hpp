@@ -1,25 +1,25 @@
 #ifndef _WOLFEN_ENTITY_PLAYER_HPP_
 #define _WOLFEN_ENTITY_PLAYER_HPP_
 
-#include "entity/IEntity.hpp"
-#include "utils/settings.hpp"
+#include "utils/common.hpp"
+#include "utils/types.hpp"
 
 namespace wolfen {
-	class Player : public IEntity {
+	class Player {
 		private:
 			const float m_maxspeed {};
 
+			Vec2 m_position;
 			Vec2 m_motion {};
 			Vec2 m_velocity {};
-			float m_rotation {};
+			float m_angle { 90.0F };
 
 		public:
-			Player(float x, float y, float speed)
-				: IEntity { x, y, settings::PLAYER_WIDTH, settings::PLAYER_HEIGHT },
-				  m_maxspeed { speed } {}
+			Player(const Vec2 p_position, float p_speed)
+				: m_maxspeed { p_speed }, m_position { p_position } {}
 
-			void update(const Context& ctx) override;
-			void draw(const Context& ctx) override;
+			void update(const Context& ctx);
+			void draw(const Context& ctx);
 
 		private:
 			void checkInput(const Uint8 *keyboard);

@@ -2,6 +2,7 @@
 #define _WOLFEN_CORE_ENGINE_HPP_
 
 #include "core/Display.hpp"
+#include "core/Map.hpp"
 #include "entity/Player.hpp"
 
 namespace wolfen {
@@ -13,6 +14,7 @@ namespace wolfen {
 
 			// TODO: Create a entity manager.
 			Player m_player;
+			Map m_map;
 
 		public:
 			Engine();

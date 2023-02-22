@@ -29,8 +29,8 @@ namespace wolfen {
 		SDL_DestroyWindow(m_window);
 	}
 
-	void Display::load(int width, int height) {
-		m_window = createWindow(width, height);
+	void Display::load(Vec2 window_size) {
+		m_window = createWindow(window_size.x, window_size.y);
 		if (!m_window) {
 			LOG_F(ERROR, "Unable to create default window!");
 			throw std::runtime_error(SDL_GetError());
@@ -42,11 +42,14 @@ namespace wolfen {
 			throw std::runtime_error(SDL_GetError());
 		}
 
+		SDL_RenderSetLogicalSize(
+			m_renderer, settings::SCREEN_SIZE.x, settings::SCREEN_SIZE.y
+		);
 		SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
 	}
 
 	void Display::beginDrawing() {
-		setColor(clear_color);
+		setColor(0, 0, 0);
 		if (SDL_RenderClear(m_renderer) < 0) {
 			LOG_F(ERROR, "Unable to clear display!");
 			throw std::runtime_error(SDL_GetError());
@@ -57,13 +60,18 @@ namespace wolfen {
 		SDL_RenderPresent(m_renderer);
 	}
 
-	Display& Display::fillRect(const Vec2& pos, const Vec2& size) {
-		SDL_FRect rect { pos.x, pos.y, size.x, size.y };
+	Display& Display::fillRect(float x, float y, float w, float h) {
+		SDL_FRect rect { x, y, w, h };
 		if (SDL_RenderFillRectF(m_renderer, &rect) < 0) {
-			LOG_F(ERROR, "Unable to set color!");
+			LOG_F(ERROR, "Unable to draw rect!");
 			throw std::runtime_error(SDL_GetError());
 		}
+
 		return *this;
+	}
+
+	Display& Display::fillRect(const Vec2& pos, const Vec2& size) {
+		return fillRect(pos.x, pos.y, size.x, size.y);
 	}
 
 	Display& Display::drawLine(const Vec2& from, const Vec2& to) {

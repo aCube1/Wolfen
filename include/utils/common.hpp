@@ -1,11 +1,12 @@
 #ifndef _WOLFEN_UTILS_COMMON_HPP_
 #define _WOLFEN_UTILS_COMMON_HPP_
 
-#include "core/Display.hpp"
-
+#include <SDL_stdinc.h>
 #include <cmath>
 
 namespace wolfen {
+	class Display;
+
 	struct Context {
 		public:
 			Display& display;
