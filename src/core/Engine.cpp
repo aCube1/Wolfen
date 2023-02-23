@@ -25,18 +25,24 @@ namespace wolfen {
 		m_buffersprite.setTexture(m_framebuffer.getTexture());
 
 		m_map.generate();
+		m_player.setPosition(m_map.getInitialPos());
 
 		m_running = true;
 	}
 
 	void Engine::run() {
 		sf::Clock clock {};
+		sf::View camera { m_framebuffer.getView() };
 
 		while (m_window.isOpen() && m_running) {
 			m_deltatime = clock.restart().asSeconds();
 
 			processEvents();
 			update();
+
+			camera.setCenter(m_player.getPosition());
+			m_framebuffer.setView(camera);
+
 			draw();
 		}
 	}
@@ -53,12 +59,15 @@ namespace wolfen {
 	}
 
 	void Engine::update() {
-		m_player.update(m_deltatime);
+		m_player.update(m_deltatime, m_map);
 	}
 
 	void Engine::draw() {
 		m_framebuffer.clear();
-		{ m_player.draw(m_framebuffer); }
+		{
+			m_map.draw(m_framebuffer);
+			m_player.draw(m_framebuffer);
+		}
 		m_framebuffer.display();
 
 		m_window.clear();

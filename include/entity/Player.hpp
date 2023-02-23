@@ -1,6 +1,8 @@
 #ifndef _WOLFEN_ENTITY_PLAYER_HPP_
 #define _WOLFEN_ENTITY_PLAYER_HPP_
 
+#include "core/Map.hpp"
+
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -17,13 +19,17 @@ namespace wolfen {
 			float m_angle { 90.0F };
 
 		public:
-			Player() = default;
+			Player();
 
-			void update(float dt);
+			void update(float dt, const Map& map);
 			void draw(sf::RenderTexture& target);
 
 			inline void setPosition(sf::Vector2f pos) {
 				m_position = pos;
+			}
+
+			[[nodiscard]] inline sf::Vector2f getPosition() {
+				return m_position;
 			}
 
 		private:

@@ -12,8 +12,8 @@ namespace wolfen {
 	constexpr auto PLAYER_SPEED { 200.0F };
 	constexpr auto PLAYER_ROTATION_SPEED { 5.0F };
 
-	constexpr auto TILE_WIDTH { 32 };
-	constexpr auto TILE_HEIGHT { 32 };
+	constexpr auto TILE_WIDTH { 16 };
+	constexpr auto TILE_HEIGHT { 16 };
 } // namespace wolfen
 
 #endif /* _WOLFEN_UTILS_HPP_ */
