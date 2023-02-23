@@ -2,20 +2,27 @@
 
 #include "utils/settings.hpp"
 
-#include <SDL.h>
-#include <SDL_events.h>
-#include <SDL_timer.h>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/WindowStyle.hpp>
 #include <loguru.hpp>
 #include <stdexcept>
 
 namespace wolfen {
-	Engine::Engine() : m_player { settings::PLAYER_POS, settings::PLAYER_SPEED } {
-		if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-			LOG_F(ERROR, "Unable to initialize SDL2!");
-			throw std::runtime_error(SDL_GetError());
-		}
+	Engine::Engine() {
+		const sf::View view { sf::FloatRect { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT } };
+		const sf::VideoMode video { WINDOW_WIDTH, WINDOW_HEIGHT };
 
-		m_display.load(settings::WINDOW_SIZE);
+		m_window.create(video, WINDOW_TITLE, sf::Style::Titlebar | sf::Style::Close);
+		m_window.setView(view);
+
+		// TODO: Make vertical sync optional;
+		m_window.setVerticalSyncEnabled(true);
+
+		if (!m_framebuffer.create(SCREEN_WIDTH, SCREEN_HEIGHT)) {
+			throw std::runtime_error("Unable to create framebuffer for rendering!");
+		}
+		m_buffersprite.setTexture(m_framebuffer.getTexture());
 
 		m_map.generate();
 
@@ -23,40 +30,39 @@ namespace wolfen {
 	}
 
 	void Engine::run() {
-		while (m_running) {
-			auto last_time = SDL_GetTicks64();
+		sf::Clock clock {};
+
+		while (m_window.isOpen() && m_running) {
+			m_deltatime = clock.restart().asSeconds();
 
 			processEvents();
 			update();
 			draw();
-
-			m_ctx.dt = (SDL_GetTicks64() - last_time) / 1000.0;
 		}
 	}
 
 	void Engine::processEvents() {
-		SDL_Event e {};
+		sf::Event e;
 
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) {
+		while (m_window.pollEvent(e)) {
+			if (e.type == sf::Event::Closed) {
+				m_window.close();
 				m_running = false;
 			}
 		}
-
-		SDL_PumpEvents();
-		m_ctx.keyboard = SDL_GetKeyboardState(nullptr);
 	}
 
 	void Engine::update() {
-		m_player.update(m_ctx);
+		m_player.update(m_deltatime);
 	}
 
 	void Engine::draw() {
-		m_display.beginDrawing();
-		{
-			m_player.draw(m_ctx);
-			m_map.draw(m_display);
-		}
-		m_display.endDrawing();
+		m_framebuffer.clear();
+		{ m_player.draw(m_framebuffer); }
+		m_framebuffer.display();
+
+		m_window.clear();
+		{ m_window.draw(m_buffersprite); }
+		m_window.display();
 	}
 } // namespace wolfen

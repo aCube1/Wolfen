@@ -21,12 +21,9 @@ target_sources(
 		src/main.cpp
 
 		src/core/Engine.cpp
-		src/core/Display.cpp
 		src/core/Map.cpp
 
 		src/entity/Player.cpp
-
-		src/utils/types.cpp
 )
 
 target_include_directories(

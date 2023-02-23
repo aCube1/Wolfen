@@ -3,12 +3,19 @@ include_guard()
 set(LIBS_DIR ${PROJECT_SOURCE_DIR}/ext)
 
 function(link_default_libraries target)
-	find_package(SDL2 2.24.2 REQUIRED)
+	find_package(
+		SFML 2.5.1
+		COMPONENTS
+			window graphics audio
+		REQUIRED
+	)
 
 	target_link_libraries(
 		${target}
 		PRIVATE
-			SDL2::SDL2
+			sfml-window
+			sfml-graphics
+			sfml-audio
 	)
 
 	target_sources(

@@ -1,18 +1,19 @@
 #ifndef _WOLFEN_UTILS_SETTINGS_HPP_
 #define _WOLFEN_UTILS_SETTINGS_HPP_
 
-#include "utils/types.hpp"
-
-namespace wolfen::settings {
+namespace wolfen {
 	constexpr auto WINDOW_TITLE { "Wolfen" };
-	constexpr Vec2 WINDOW_SIZE { 960, 640 };
-	constexpr Vec2 SCREEN_SIZE { 480, 320 };
+	constexpr auto WINDOW_WIDTH { 960 };
+	constexpr auto WINDOW_HEIGHT { 640 };
 
-	constexpr Vec2 PLAYER_POS { 64, 64 };
-	constexpr auto PLAYER_SPEED { 200 };
+	constexpr auto SCREEN_WIDTH { 480 };
+	constexpr auto SCREEN_HEIGHT { 320 };
+
+	constexpr auto PLAYER_SPEED { 200.0F };
 	constexpr auto PLAYER_ROTATION_SPEED { 5.0F };
 
-	constexpr Vec2 TILE_SIZE { 16, 16 };
-} // namespace wolfen::settings
+	constexpr auto TILE_WIDTH { 32 };
+	constexpr auto TILE_HEIGHT { 32 };
+} // namespace wolfen
 
 #endif /* _WOLFEN_UTILS_HPP_ */

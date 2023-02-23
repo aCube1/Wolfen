@@ -1,8 +1,7 @@
 #ifndef _WOLFEN_CORE_MAP_HPP_
 #define _WOLFEN_CORE_MAP_HPP_
 
-#include "core/Display.hpp"
-
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
 #include <vector>
 
@@ -25,9 +24,8 @@ namespace wolfen {
 
 			void generate();
 
-			void draw(Display& display) const;
+			void draw_map(sf::RenderWindow& window) const;
 
-			[[nodiscard]] TileType getTile(Vec2 pos) const;
 			[[nodiscard]] TileType getTile(std::uint16_t x, std::uint16_t y) const;
 	};
 } // namespace wolfen

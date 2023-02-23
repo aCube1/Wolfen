@@ -1,18 +1,24 @@
 #ifndef _WOLFEN_UTILS_COMMON_HPP_
 #define _WOLFEN_UTILS_COMMON_HPP_
 
-#include <SDL_stdinc.h>
+#include <SFML/System/Vector2.hpp>
 #include <cmath>
 
 namespace wolfen {
 	class Display;
 
-	struct Context {
-		public:
-			Display& display;
-			double dt;
-			const Uint8 *keyboard;
-	};
+	template <typename T>
+	[[nodiscard]] inline T getLenght(const sf::Vector2<T> vec) {
+		return std::sqrt(vec.x * vec.x + vec.y * vec.y);
+	}
+
+	template <typename T>
+	inline void normalize(sf::Vector2<T>& vec) {
+		auto lenght { getLenght(vec) };
+		if (lenght > 0) {
+			vec /= lenght;
+		}
+	}
 
 	[[nodiscard]] inline float deg2rad(float deg) {
 		return (deg * M_PI) / 180.0F;

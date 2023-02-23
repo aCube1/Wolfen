@@ -1,28 +1,33 @@
 #ifndef _WOLFEN_ENTITY_PLAYER_HPP_
 #define _WOLFEN_ENTITY_PLAYER_HPP_
 
-#include "utils/common.hpp"
-#include "utils/types.hpp"
+#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/System/Vector2.hpp>
 
 namespace wolfen {
 	class Player {
 		private:
-			const float m_maxspeed {};
+			sf::VertexArray m_line { sf::Lines, 2 };
 
-			Vec2 m_position;
-			Vec2 m_motion {};
-			Vec2 m_velocity {};
+			sf::Vector2f m_position;
+			sf::Vector2f m_motion {};
+			sf::Vector2f m_velocity {};
+
 			float m_angle { 90.0F };
 
 		public:
-			Player(const Vec2 p_position, float p_speed)
-				: m_maxspeed { p_speed }, m_position { p_position } {}
+			Player() = default;
 
-			void update(const Context& ctx);
-			void draw(const Context& ctx);
+			void update(float dt);
+			void draw(sf::RenderTexture& target);
+
+			inline void setPosition(sf::Vector2f pos) {
+				m_position = pos;
+			}
 
 		private:
-			void checkInput(const Uint8 *keyboard);
+			void checkInput();
 	};
 } // namespace wolfen
 
