@@ -3,37 +3,40 @@
 
 #include "core/Map.hpp"
 
-#include <SFML/Graphics/RenderTexture.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/Vector2.hpp>
 
 namespace wolfen {
 	class Player {
-		private:
-			sf::VertexArray m_line { sf::Lines, 2 };
-
-			sf::Vector2f m_position;
-			sf::Vector2f m_motion {};
-			sf::Vector2f m_velocity {};
-
-			float m_angle { 90.0F };
-
 		public:
-			Player();
+			Player(Map& map) : m_map { map } {}
 
-			void update(float dt, const Map& map);
-			void draw(sf::RenderTexture& target);
+			void update(float dt, sf::RenderWindow& window);
 
 			inline void setPosition(sf::Vector2f pos) {
 				m_position = pos;
 			}
 
-			[[nodiscard]] inline sf::Vector2f getPosition() {
+			[[nodiscard]] inline const sf::Vector2f& getPosition() const {
 				return m_position;
 			}
 
+			[[nodiscard]] inline const sf::Vector2f& getDirection() const {
+				return m_direction;
+			}
+
+			[[nodiscard]] inline const sf::Vector2f& getPlane() const {
+				return m_plane;
+			}
+
 		private:
-			void checkInput();
+			sf::VertexArray m_line { sf::Lines, 2 };
+			Map& m_map;
+
+			sf::Vector2f m_position {};
+			sf::Vector2f m_direction { -1.0, 0.0 };
+			sf::Vector2f m_plane { 0.0, 0.66 };
 	};
 } // namespace wolfen
 

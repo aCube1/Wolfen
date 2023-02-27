@@ -2,22 +2,14 @@
 #define _WOLFEN_UTILS_COMMON_HPP_
 
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Vector3.hpp>
 #include <cmath>
 
 namespace wolfen {
-	class Display;
-
 	template <typename T>
-	[[nodiscard]] inline T getLenght(const sf::Vector2<T> vec) {
-		return std::sqrt(vec.x * vec.x + vec.y * vec.y);
-	}
-
-	template <typename T>
-	inline void normalize(sf::Vector2<T>& vec) {
-		auto lenght { getLenght(vec) };
-		if (lenght > 0) {
-			vec /= lenght;
-		}
+	inline sf::Vector2<T> vecRotate(const sf::Vector2<T>& vec, T value) {
+		return { vec.x * std::cos(value) - vec.y * std::sin(value),
+				 vec.x * std::sin(value) + vec.y * std::cos(value) };
 	}
 
 	[[nodiscard]] inline float deg2rad(float deg) {

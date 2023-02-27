@@ -10,10 +10,12 @@ namespace wolfen {
 	constexpr auto SCREEN_HEIGHT { 320 };
 
 	constexpr auto PLAYER_SPEED { 200.0F };
-	constexpr auto PLAYER_ROTATION_SPEED { 5.0F };
+	constexpr auto PLAYER_TURN_SPEED { 3.0F };
+	constexpr auto PLAYER_FOV { 66.0F };
 
-	constexpr auto TILE_WIDTH { 16 };
-	constexpr auto TILE_HEIGHT { 16 };
+	constexpr auto TILE_SIZE { 16 };
+
+	constexpr auto RENDER_DISTANCE { 1024.0F };
 } // namespace wolfen
 
 #endif /* _WOLFEN_UTILS_HPP_ */

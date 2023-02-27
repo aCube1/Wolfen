@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 namespace wolfen {
-	Engine::Engine() {
+	Engine::Engine() : m_player { m_map }, m_raycaster(m_player, m_map) {
 		const sf::View view { sf::FloatRect { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT } };
 		const sf::VideoMode video { WINDOW_WIDTH, WINDOW_HEIGHT };
 
@@ -32,16 +32,12 @@ namespace wolfen {
 
 	void Engine::run() {
 		sf::Clock clock {};
-		sf::View camera { m_framebuffer.getView() };
 
 		while (m_window.isOpen() && m_running) {
 			m_deltatime = clock.restart().asSeconds();
 
 			processEvents();
 			update();
-
-			camera.setCenter(m_player.getPosition());
-			m_framebuffer.setView(camera);
 
 			draw();
 		}
@@ -59,19 +55,19 @@ namespace wolfen {
 	}
 
 	void Engine::update() {
-		m_player.update(m_deltatime, m_map);
+		m_player.update(m_deltatime, m_window);
+		m_raycaster.update();
 	}
 
 	void Engine::draw() {
 		m_framebuffer.clear();
-		{
-			m_map.draw(m_framebuffer);
-			m_player.draw(m_framebuffer);
-		}
+		// Draw the raycaster to a framebuffer.
+		// I could draw it directly to the window, but... I don't want.
+		m_framebuffer.draw(m_raycaster);
 		m_framebuffer.display();
 
 		m_window.clear();
-		{ m_window.draw(m_buffersprite); }
+		m_window.draw(m_buffersprite);
 		m_window.display();
 	}
 } // namespace wolfen

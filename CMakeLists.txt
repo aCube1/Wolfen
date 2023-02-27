@@ -22,6 +22,7 @@ target_sources(
 
 		src/core/Engine.cpp
 		src/core/Map.cpp
+		src/core/Raycaster.cpp
 
 		src/entity/Player.cpp
 )
