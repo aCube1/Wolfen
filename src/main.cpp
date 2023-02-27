@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[]) {
 	try {
+		// I don't like this logging library, but I'm too lazy to change it.
 		loguru::init(argc, argv);
 
 		auto engine { wolfen::Engine() };

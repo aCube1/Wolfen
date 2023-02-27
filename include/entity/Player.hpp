@@ -34,7 +34,6 @@ namespace wolfen {
 			void move(float motion, float dt);
 			void strafe(float side, float dt);
 
-			sf::VertexArray m_line { sf::Lines, 2 };
 			Map& m_map;
 
 			sf::Vector2f m_position {};

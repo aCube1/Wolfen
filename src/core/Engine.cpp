@@ -15,6 +15,7 @@ namespace wolfen {
 
 		m_window.create(video, WINDOW_TITLE, sf::Style::Titlebar | sf::Style::Close);
 		m_window.setView(view);
+		m_window.setMouseCursorVisible(false); // Hide mouse, I don't want to see it.
 
 		// TODO: Make vertical sync optional;
 		m_window.setVerticalSyncEnabled(true);

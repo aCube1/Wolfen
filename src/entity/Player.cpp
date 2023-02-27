@@ -28,23 +28,44 @@ namespace wolfen {
 			m_plane = vecRotate(m_plane, turn_speed * dt);
 		}
 
+		// Move forward and backward.
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			move(-1.0F, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			move(1.0F, dt);
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			move(-1.0F, dt);
+		// Strafe to the left and right.
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			strafe(-1.0F, dt);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			strafe(1.0F, dt);
 		}
 	}
 
 	void Player::move(float motion, float dt) {
-		sf::Vector2f next_pos { m_position + m_direction * motion * PLAYER_SPEED * dt };
+		sf::Vector2f velocity { m_direction * PLAYER_SPEED * motion * dt };
+		vecNormalize(velocity);
 
-		if (!m_map.isColliding(next_pos.x, m_position.y)) {
-			m_position.x = next_pos.x;
+		if (!m_map.isColliding(m_position.x - velocity.x, m_position.y)) {
+			m_position.x -= velocity.x;
 		}
-		if (!m_map.isColliding(m_position.x, next_pos.y)) {
-			m_position.y = next_pos.y;
+		if (!m_map.isColliding(m_position.x, m_position.y - velocity.y)) {
+			m_position.y -= velocity.y;
+		}
+	}
+
+	void Player::strafe(float side, float dt) {
+		sf::Vector2f velocity { side * m_plane * PLAYER_SPEED * dt };
+		vecNormalize(velocity);
+
+		if (!m_map.isColliding(m_position.x + velocity.x, m_position.y)) {
+			m_position.x += velocity.x;
+		}
+		if (!m_map.isColliding(m_position.x, m_position.y + velocity.y)) {
+			m_position.y += velocity.y;
 		}
 	}
 } // namespace wolfen

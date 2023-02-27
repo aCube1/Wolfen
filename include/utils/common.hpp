@@ -2,7 +2,6 @@
 #define _WOLFEN_UTILS_COMMON_HPP_
 
 #include <SFML/System/Vector2.hpp>
-#include <SFML/System/Vector3.hpp>
 #include <cmath>
 
 namespace wolfen {
@@ -12,12 +11,16 @@ namespace wolfen {
 				 vec.x * std::sin(value) + vec.y * std::cos(value) };
 	}
 
-	[[nodiscard]] inline float deg2rad(float deg) {
-		return (deg * M_PI) / 180.0F;
+	template <typename T>
+	inline void vecNormalize(sf::Vector2<T>& vec) {
+		auto lenght { std::sqrt(vec.x * vec.x + vec.y * vec.y) };
+		if (lenght > 0) {
+			vec /= lenght;
+		}
 	}
 
-	[[nodiscard]] inline float rad2deg(float rad) {
-		return (rad * 180.0F) / M_PI;
+	[[nodiscard]] inline float deg2rad(float deg) {
+		return (deg * M_PI) / 180.0F;
 	}
 } // namespace wolfen
 

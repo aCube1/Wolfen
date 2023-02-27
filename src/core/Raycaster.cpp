@@ -3,7 +3,6 @@
 #include "utils/settings.hpp"
 
 #include <cmath>
-#include <loguru.hpp>
 
 namespace wolfen {
 	void Raycaster::update() {
@@ -19,9 +18,11 @@ namespace wolfen {
 
 			size_t line_index { static_cast<size_t>(x * 2) };
 
+			// Set vertical line position and lenght.
 			m_lines[line_index].position = { static_cast<float>(x), line_start };
 			m_lines[line_index + 1].position = { static_cast<float>(x), line_end };
 
+			// Set line color.
 			m_lines[line_index].color = ray_data.color;
 			m_lines[line_index + 1].color = ray_data.color;
 		}
@@ -92,7 +93,7 @@ namespace wolfen {
 		collision.lenght = std::min(RENDER_DISTANCE, collision.lenght);
 
 		// Calculate the distance projected on the camera in a Non-euclidean way to
-		// Prevent fisheye effect.
+		// prevent fisheye effect.
 		if (!collision.horizontal) {
 			collision.distance = (map_pos.x - ray_pos.x + (1.0 - step.x) / 2.0) /
 								 ray_dir.x;
@@ -111,7 +112,7 @@ namespace wolfen {
 			break;
 		}
 
-		// Give horizontal lines a different brightness.
+		// Give horizontal walls a different brightness.
 		if (collision.horizontal) {
 			collision.color.r /= 2;
 			collision.color.g /= 2;
