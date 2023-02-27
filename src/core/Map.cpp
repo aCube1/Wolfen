@@ -35,8 +35,8 @@ namespace wolfen {
 				TileType tile { data[x * m_width + y] };
 
 				if (tile == TileType::PlayerPos) {
-					m_initial_pos = { static_cast<float>(x * TILE_SIZE),
-									  static_cast<float>(y * TILE_SIZE) };
+					m_initial_pos = { x * TILE_SIZE + TILE_SIZE / 2.0F,
+									  y * TILE_SIZE + TILE_SIZE / 2.0F };
 					m_data.push_back(TileType::Empty);
 					continue;
 				}

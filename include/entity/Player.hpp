@@ -10,7 +10,7 @@
 namespace wolfen {
 	class Player {
 		public:
-			Player(Map& map) : m_map { map } {}
+			Player(Map& map);
 
 			void update(float dt, sf::RenderWindow& window);
 
@@ -31,12 +31,15 @@ namespace wolfen {
 			}
 
 		private:
+			void move(float motion, float dt);
+			void strafe(float side, float dt);
+
 			sf::VertexArray m_line { sf::Lines, 2 };
 			Map& m_map;
 
 			sf::Vector2f m_position {};
-			sf::Vector2f m_direction { -1.0, 0.0 };
-			sf::Vector2f m_plane { 0.0, 0.66 };
+			sf::Vector2f m_direction {};
+			sf::Vector2f m_plane {};
 	};
 } // namespace wolfen
 

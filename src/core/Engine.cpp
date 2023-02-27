@@ -41,6 +41,8 @@ namespace wolfen {
 
 			draw();
 		}
+
+		m_window.close();
 	}
 
 	void Engine::processEvents() {
@@ -48,7 +50,11 @@ namespace wolfen {
 
 		while (m_window.pollEvent(e)) {
 			if (e.type == sf::Event::Closed) {
-				m_window.close();
+				m_running = false;
+			}
+
+			// If Escape key is pressed, just exit.
+			if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape) {
 				m_running = false;
 			}
 		}
