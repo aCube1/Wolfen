@@ -19,14 +19,15 @@ namespace wolfen {
 
 		private:
 			void processEvents();
-			void update();
+			void update(float dt);
 			void draw();
 
 			sf::RenderWindow m_window;
+
+			// Framebuffer
 			sf::RenderTexture m_framebuffer;
 			sf::Sprite m_buffersprite;
 
-			float m_deltatime {};
 			bool m_running { false };
 
 			// TODO: Create a entity manager.

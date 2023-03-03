@@ -9,7 +9,10 @@ namespace wolfen {
 	enum class TileType {
 		Empty = '.',
 		PlayerPos = '@',
-		Wall = '#',
+		Wall1 = '!',
+		Wall2 = '*',
+		Wall3 = '%',
+		Wall4 = '#',
 	};
 
 	class Map {

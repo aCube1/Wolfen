@@ -1,5 +1,6 @@
 #include "core/Engine.hpp"
 
+#include "core/Assets.hpp"
 #include "utils/settings.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
@@ -9,7 +10,8 @@
 #include <stdexcept>
 
 namespace wolfen {
-	Engine::Engine() : m_player { m_map }, m_raycaster(m_player, m_map) {
+	Engine::Engine()
+		: m_player { m_map }, m_raycaster(m_player, m_map, RaycasterType::TEXTURIZED) {
 		const sf::View view { sf::FloatRect { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT } };
 		const sf::VideoMode video { WINDOW_WIDTH, WINDOW_HEIGHT };
 
@@ -25,6 +27,8 @@ namespace wolfen {
 		}
 		m_buffersprite.setTexture(m_framebuffer.getTexture());
 
+		Assets::loadAllTextures("assets");
+
 		m_map.generate();
 		m_player.setPosition(m_map.getInitialPos());
 
@@ -35,10 +39,13 @@ namespace wolfen {
 		sf::Clock clock {};
 
 		while (m_window.isOpen() && m_running) {
-			m_deltatime = clock.restart().asSeconds();
+			auto dt = clock.restart().asSeconds();
 
 			processEvents();
-			update();
+
+			if (m_window.hasFocus()) {
+				update(dt);
+			}
 
 			draw();
 		}
@@ -61,8 +68,12 @@ namespace wolfen {
 		}
 	}
 
-	void Engine::update() {
-		m_player.update(m_deltatime, m_window);
+	void Engine::update(float dt) {
+		auto mouse_pos { sf::Mouse::getPosition(m_window) };
+		sf::Mouse::setPosition({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 }, m_window);
+
+		m_player.update(dt, mouse_pos);
+
 		m_raycaster.update();
 	}
 

@@ -15,12 +15,9 @@ namespace wolfen {
 		m_plane = { 0.0, std::tan(deg2rad(CAMERA_FOV / 2.0F)) };
 	}
 
-	void Player::update(float dt, sf::RenderWindow& window) {
+	void Player::update(float dt, const sf::Vector2i& mouse_pos) {
 		// Turn based on the mouse position on screen.
-		auto mouse_pos { sf::Mouse::getPosition(window) };
-		auto turn_speed { CAMERA_FOV * (WINDOW_WIDTH / 2 - mouse_pos.x) / WINDOW_WIDTH };
-
-		sf::Mouse::setPosition({ WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 }, window);
+		auto turn_speed = CAMERA_FOV * (WINDOW_WIDTH / 2 - mouse_pos.x) / WINDOW_WIDTH;
 
 		// Apply rotation to the camera direction and plane.
 		if (turn_speed != 0.0) {

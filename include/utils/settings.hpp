@@ -12,6 +12,7 @@ namespace wolfen {
 	constexpr auto PLAYER_SPEED { 100.0F };
 
 	constexpr auto TILE_SIZE { 16 };
+	constexpr auto TEXTURE_SIZE { 32 };
 
 	constexpr auto CAMERA_FOV { 66.0F };
 	constexpr auto RENDER_DISTANCE { 1024.0F };

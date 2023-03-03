@@ -12,7 +12,7 @@ namespace wolfen {
 		public:
 			Player(Map& map);
 
-			void update(float dt, sf::RenderWindow& window);
+			void update(float dt, const sf::Vector2i& mouse_pos);
 
 			inline void setPosition(sf::Vector2f pos) {
 				m_position = pos;

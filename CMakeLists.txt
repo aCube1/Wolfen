@@ -20,6 +20,7 @@ target_sources(
 	PRIVATE
 		src/main.cpp
 
+		src/core/Assets.cpp
 		src/core/Engine.cpp
 		src/core/Map.cpp
 		src/core/Raycaster.cpp
