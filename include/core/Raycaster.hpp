@@ -37,6 +37,10 @@ namespace wolfen {
 				m_raycaster_type = type;
 			}
 
+			[[nodiscard]] inline RaycasterType getRaycasterType() const {
+				return m_raycaster_type;
+			}
+
 		private:
 			void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

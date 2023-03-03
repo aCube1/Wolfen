@@ -65,6 +65,15 @@ namespace wolfen {
 			if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::Escape) {
 				m_running = false;
 			}
+
+			// Switch raycaster type.
+			if (e.type == sf::Event::KeyPressed && e.key.code == sf::Keyboard::R) {
+				if (m_raycaster.getRaycasterType() == RaycasterType::NO_TEXTURES) {
+					m_raycaster.setRaycasterType(RaycasterType::TEXTURIZED);
+				} else {
+					m_raycaster.setRaycasterType(RaycasterType::NO_TEXTURES);
+				}
+			}
 		}
 	}
 

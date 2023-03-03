@@ -36,6 +36,8 @@ namespace wolfen {
 			} else {
 				auto tex_coords { getTextureCoords(raydata.tile, raydata.texture_x) };
 
+				m_lines[line_idx].color = sf::Color::White;
+				m_lines[line_idx + 1].color = sf::Color::White;
 				m_lines[line_idx].texCoords = { tex_coords.x, 0.0 };
 				m_lines[line_idx + 1].texCoords = { tex_coords.x, TEXTURE_SIZE };
 			}
