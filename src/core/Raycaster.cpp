@@ -47,9 +47,11 @@ namespace wolfen {
 	void Raycaster::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 		states.transform *= getTransform();
 
-		states.texture = m_raycaster_type == RaycasterType::NO_TEXTURES
-						   ? nullptr
-						   : states.texture = Assets::getTexture("walls");
+		if (m_raycaster_type == RaycasterType::NO_TEXTURES) {
+			states.texture = nullptr;
+		} else {
+			states.texture = Assets::getTexture("walls");
+		}
 
 		target.draw(m_lines, states);
 	}

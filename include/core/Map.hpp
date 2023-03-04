@@ -23,19 +23,19 @@ namespace wolfen {
 			void generate();
 
 			[[nodiscard]] bool isColliding(float x, float y) const;
-			[[nodiscard]] TileType getTile(std::uint16_t x, std::uint16_t y) const;
+			[[nodiscard]] TileType getTile(int x, int y) const;
 
 			[[nodiscard]] inline const sf::Vector2f& getInitialPos() const {
 				return m_initial_pos;
 			}
 
 		private:
-			std::uint16_t m_width;
-			std::uint16_t m_height;
+			int m_width {};
+			int m_height {};
 
-			sf::Vector2f m_initial_pos;
+			sf::Vector2f m_initial_pos {};
 
-			std::vector<TileType> m_data;
+			std::vector<TileType> m_data {};
 	};
 } // namespace wolfen
 

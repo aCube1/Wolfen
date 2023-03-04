@@ -33,7 +33,7 @@ namespace wolfen {
 		m_height = 16;
 		for (auto x { 0 }; x < m_width; x += 1) {
 			for (auto y { 0 }; y < m_height; y += 1) {
-				TileType tile { data[x * m_width + y] };
+				TileType tile { static_cast<TileType>(data[x * m_width + y]) };
 
 				if (tile == TileType::PlayerPos) {
 					m_initial_pos = { x * TILE_SIZE + TILE_SIZE / 2.0F,
@@ -55,7 +55,7 @@ namespace wolfen {
 		return tile != TileType::Empty;
 	}
 
-	TileType Map::getTile(std::uint16_t x, std::uint16_t y) const {
+	TileType Map::getTile(int x, int y) const {
 		if (x < 0 || y < 0 || x >= m_width || y >= m_height) {
 			return TileType::Empty;
 		}

@@ -65,10 +65,10 @@ namespace wolfen {
 			Player& m_player;
 			Map& m_map;
 
-			// FIXME:Remove hardcoded texture size.
+			// FIXME: Remove hardcoded texture size.
 			sf::Vector2u m_texture_size { 32 * 4, 32 };
 
-			RaycasterType m_raycaster_type;
+			RaycasterType m_raycaster_type {};
 
 			sf::VertexArray m_lines { sf::Lines, SCREEN_WIDTH * 2 };
 	};

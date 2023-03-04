@@ -31,8 +31,8 @@ namespace wolfen {
 			bool m_running { false };
 
 			// TODO: Create a entity manager.
+			Map m_map {};
 			Player m_player;
-			Map m_map;
 			Raycaster m_raycaster;
 	};
 } // namespace wolfen
